@@ -1,3 +1,3 @@
 
 
-![alt text](https://drive.google.com/file/d/1BcEIDLtm0nmeH7IgFlxXzPOf6oJSYOWB/view?usp=sharing)
+![alt text](https://github.com/sc0der/humo-task/blob/main/images/photo_2021-07-25_19-06-00.jpg)
