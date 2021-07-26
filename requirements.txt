@@ -7,3 +7,7 @@ Jinja2==3.0.1
 MarkupSafe==2.0.1
 SQLAlchemy==1.4.21
 Werkzeug==2.0.1
+aspose-cells
+jpype1==0.7.0
+pandas
+openpyxl

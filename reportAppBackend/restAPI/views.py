@@ -1,11 +1,15 @@
+from django.db.models.fields.files import FieldFile
 from rest_framework.views import APIView
 from rest_framework import status
-
-from .models import Service, Category, Status
+import pandas as pd
+from .models import Service, Category, Status, TableObject, ExportedFile
 from .seriallizer import ServiceSerializer, CategorySerializer, StatusSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.http import Http404
+from pathlib import Path
+import os
+
 
 
 # category API
@@ -121,5 +125,25 @@ def status_detail(request, pk):
     elif request.method == 'DELETE':
         current_status.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
  
+@api_view(['GET'])
+def generateFile(request):
+    categories_list = Category.objects.all()
+    file_list = ExportedFile.objects.all()
+    rows = []
+    for cat in categories_list:
+        for serv in cat.service.all():
+            rows.append(TableObject(cat.name, serv.name, serv.status_name, serv.remark))
+    data = {"№": ["Category", "Service", "Status", "Remark"]}
+    for row in range(len(rows)):
+        data.update({row:[rows[row].category_name, rows[row].service_name, rows[row].status_name, rows[row].remark]})
+    
+    df = pd.DataFrame.from_dict(data, orient="index")
+    filename = "table.xlsx"
+    df.to_excel("media/"+filename, index=False, header=True)
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    my_file = BASE_DIR.joinpath("media/"+filename)
+    # STATIC_ROOT = os.path.join(os.path.dirname(my_file))
+    file = ExportedFile(file=my_file)
+    file.save()
+    return Response({"":len(file_list)})

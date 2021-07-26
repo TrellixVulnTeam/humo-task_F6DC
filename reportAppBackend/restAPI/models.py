@@ -43,3 +43,14 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
+        
+class ExportedFile(models.Model):
+    file = models.FileField(upload_to="exports/", verbose_name="file")
+    export_date = models.DateField(auto_now_add=True) 
+
+class TableObject:
+    def __init__(self,category_name, service_name, status_name, remark):
+        self.category_name = category_name 
+        self.service_name = service_name
+        self.status_name = status_name
+        self.remark = remark

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from restAPI.views import categories_list, category_detail, services_list, service_detail, status_list, status_detail
+from restAPI.views import categories_list, category_detail, services_list, service_detail, status_list, status_detail, generateFile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -10,4 +10,6 @@ urlpatterns = [
     path('service/detail/<pk>', service_detail),
     path('status/all/', status_list),
     path('status/detail/<pk>', status_detail),
+    path('export/file/', generateFile),
+    
 ]
