@@ -143,7 +143,4 @@ def generateFile(request):
     df.to_excel("media/"+filename, index=False, header=True)
     BASE_DIR = Path(__file__).resolve().parent.parent
     my_file = BASE_DIR.joinpath("media/"+filename)
-    # STATIC_ROOT = os.path.join(os.path.dirname(my_file))
-    file = ExportedFile(file=my_file)
-    file.save()
     return Response({"":len(file_list)})
